@@ -9,8 +9,9 @@ async function saveImg(req, res) {
   const imageDataURL = req.body.image;
   const imageData = imageDataURL.replace(/^data:image\/\w+;base64,/, '');
   const imageBuffer = Buffer.from(imageData, 'base64');
+  const zusatzPath = req.params.id;
   // Generate a unique filename for the image
-  fs.mkdir('public/images/uploads/', { recursive: true }, (err) => {
+  fs.mkdir(`public/images/uploads/${zusatzPath}/`, { recursive: true }, (err) => {
     if (err) {
       console.error(err);
       res.status(500).send('Failed to create upload directory');
@@ -19,7 +20,7 @@ async function saveImg(req, res) {
 
     // Generiere einen eindeutigen Dateinamen für das Bild
     const fileName = `image_${Date.now()}.png`;
-    const filePath = path.join('public/images/uploads/', fileName);
+    const filePath = path.join(`public/images/uploads/${zusatzPath}/`, fileName);
 
     // Speichere die Bilddatei auf der Festplatte
     fs.writeFile(filePath, imageBuffer, (error) => {

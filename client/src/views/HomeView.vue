@@ -20,7 +20,7 @@
                 <q-btn
                   label="Take a Photo"
                   color="primary"
-                  @click="(dialog = true), initializeCamera(), ($event) => (curimg = props.value)"
+                  @click="((dialog = true), (curimg = props.row.id)), initializeCamera()"
                 />
               </div>
               <div class="my-table-details">
@@ -69,15 +69,18 @@ Pop Up
             <q-tooltip class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
         </q-bar>
+       
+          <q-card-section>
+            <div class="text-h6">Alert</div>
+          </q-card-section>
 
-        <q-card-section>
-          <div class="text-h6">Alert</div>
-        </q-card-section>
+          <q-card-section class="q-pt-none">
+            <video ref="videoPlayer" autoplay></video>
+          </q-card-section>
+          <q-card-section class="q-pt-none">
+            <q-btn v-close-popup @click="capturePhoto(curimg)">Capture Photo</q-btn>
+          </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          <video ref="videoPlayer" autoplay></video>
-          <q-btn v-close-popup @click="capturePhoto">Capture Photo</q-btn>
-        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -91,7 +94,7 @@ let maximizedToggle = ref(true);
 const videoPlayer = ref(null);
 let curimg = ref(null);
 async function initializeCamera() {
-  console.log(curimg);
+  console.log(curimg.value);
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     videoPlayer.value.srcObject = stream;
@@ -100,7 +103,7 @@ async function initializeCamera() {
   }
 }
 
-function capturePhoto() {
+function capturePhoto(id) {
   const canvas = document.createElement('canvas');
   const video = videoPlayer.value;
   canvas.width = video.videoWidth;
@@ -108,12 +111,12 @@ function capturePhoto() {
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
   const imageDataURL = canvas.toDataURL('image/png');
   console.log(imageDataURL);
-  uploadImage(imageDataURL);
+  uploadImage(imageDataURL, id);
 }
 
-async function uploadImage(imageDataURL) {
+async function uploadImage(imageDataURL, id) {
   try {
-    const response = await axios.post('/img', { image: imageDataURL });
+    const response = await axios.post(`/img/${id}`, { image: imageDataURL });
     // const response = await axios.post('/img', { image: imageDataURL });
     console.log(response.data);
   } catch (error) {
@@ -145,6 +148,7 @@ const columns = [
 
 const rows = [
   {
+    id: 1,
     name: 'Red Bull Original',
     image: 'energy.png',
     cal: 500,
@@ -153,6 +157,7 @@ const rows = [
     arating: 4.5,
   },
   {
+    id: 2,
     name: 'Monster Ultra Sunrise',
     image: 'energy.png',
 
@@ -163,6 +168,7 @@ const rows = [
   },
 
   {
+    id: 3,
     name: 'Rockstar Punched',
     image: 'energy.png',
 
@@ -173,6 +179,7 @@ const rows = [
   },
 
   {
+    id: 4,
     name: 'Amp Energy Original',
     image: 'energy.png',
 
@@ -183,6 +190,7 @@ const rows = [
   },
 
   {
+    id: 5,
     name: 'Full Throttle Original',
     image: 'energy.png',
 
@@ -193,6 +201,7 @@ const rows = [
   },
 
   {
+    id: 6,
     name: 'Reign Total Body Fuel',
     image: 'energy.png',
 
@@ -202,6 +211,7 @@ const rows = [
     arating: 4.3,
   },
   {
+    id: 7,
     name: 'Xyience Xenergy',
     image: 'energy.png',
 
@@ -211,6 +221,7 @@ const rows = [
     arating: 4.2,
   },
   {
+    id: 8,
     name: 'Gatorade G2',
     image: 'energy.png',
 
@@ -220,6 +231,7 @@ const rows = [
     arating: 3.7,
   },
   {
+    id: 9,
     name: 'NOS High Performance Energy',
     image: 'energy.png',
 
@@ -230,6 +242,7 @@ const rows = [
   },
 
   {
+    id: 10,
     name: 'Bang Energy',
     image: 'energy.png',
 
@@ -240,6 +253,7 @@ const rows = [
   },
 
   {
+    id: 11,
     name: 'Rip It Energy Fuel',
     image: 'energy.png',
 
@@ -250,3 +264,10 @@ const rows = [
   },
 ];
 </script>
+<style>
+video {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+}
+</style>

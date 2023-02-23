@@ -7,6 +7,6 @@ const router = express.Router();
 
 // Handle POST request to upload an image
 
-router.post('/img', asyncHandler(saveImg));
+router.post('/img/:id', asyncHandler(saveImg));
 router.get('/img/:id', asyncHandler(saveImg));
 export default router;
