@@ -1,4 +1,5 @@
 import { createRequire } from 'module';
+import { dbgetData, dbgetDetail } from '../models/test.js';
 
 const require = createRequire(import.meta.url);
 
@@ -35,6 +36,12 @@ async function saveImg(req, res) {
     });
   });
 }
+async function getData(req, res) {
+  if (req.query.id) {
+    res.status(200).json(await dbgetDetail(req.query.id));
+  } else {
+    res.status(200).json(await dbgetData());
+  }
+}
 
-// async function getImg
-export default saveImg;
+export { saveImg, getData };

@@ -10,7 +10,19 @@ export default defineConfig({
   server: {
     port: 8080,
   },
-  
+  preview: {
+    port: 5555,
+    proxy: {
+      '/energy': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
+  },
+  build: {
+    outDir: '../Server/public',
+    emptyOutDir: false,
+  },
   plugins: [
     vue({
       template: { transformAssetUrls },
@@ -22,9 +34,39 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest,
+      includeAssets: ['**/*.{js,css,html,jpg,ico,png,ttf,woff2}'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,jpg,ttf,woff2,png}'],
-        mode: 'dev',
+        mode: 'development',
+        runtimeCaching: [
+          {
+            urlPattern: /.*images\/uploads\/*.*.png/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'roberts-Bilder',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: '/energy',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'Eriks-Energys',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
     }),
   ],

@@ -1,8 +1,12 @@
 import { query } from '../db/index.js';
 
-const dbTest = async () => {
-  const { rows } = await query("SELECT 'It works' as test");
+const dbgetData = async () => {
+  const { rows } = await query('SELECT * from energys;');
+  return rows;
+};
+const dbgetDetail = async (id) => {
+  const { rows } = await query('SELECT * from energys where id=$1;', [id]);
   return rows;
 };
 
-export default dbTest;
+export { dbgetData, dbgetDetail };

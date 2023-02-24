@@ -2,7 +2,14 @@
   <div class="container d-flex flex-column align-items-center">
     <div class="q-pa-md">
       <div class="q-pa-md">
-        <q-table title="Energys" :rows="rows" :columns="columns" row-key="name" dark color="amber">
+        <q-table
+          title="Energys"
+          :rows="store.data"
+          :columns="columns"
+          row-key="name"
+          dark
+          color="amber"
+        >
           <template v-slot:body-cell-bild="props">
             <q-td :props="props">
               <div>
@@ -17,11 +24,9 @@
           <template v-slot:body-cell-Photo="props">
             <q-td :props="props">
               <div>
-                <q-btn
-                  label="Take a Photo"
-                  color="primary"
-                  @click="((dialog = true), (curimg = props.row.id)), initializeCamera()"
-                />
+                <q-tabs align="left">
+                  <q-route-tab :to="'/detail/' + props.row.id" label="Reviews" />
+                </q-tabs>
               </div>
               <div class="my-table-details">
                 {{ props.row.details }}
@@ -31,103 +36,14 @@
         >
       </div>
     </div>
-
-    <!-- -----------
-Pop Up
----------------- -->
-
-    <q-dialog
-      v-model="dialog"
-      persistent
-      :maximized="maximizedToggle"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <q-card class="bg-primary text-white">
-        <q-bar>
-          <q-space />
-
-          <q-btn
-            dense
-            flat
-            icon="minimize"
-            @click="maximizedToggle = false"
-            :disable="!maximizedToggle"
-          >
-            <q-tooltip v-if="maximizedToggle" class="bg-white text-primary">Minimize</q-tooltip>
-          </q-btn>
-          <q-btn
-            dense
-            flat
-            icon="crop_square"
-            @click="maximizedToggle = true"
-            :disable="maximizedToggle"
-          >
-            <q-tooltip v-if="!maximizedToggle" class="bg-white text-primary">Maximize</q-tooltip>
-          </q-btn>
-          <q-btn dense flat icon="close" v-close-popup>
-            <q-tooltip class="bg-white text-primary">Close</q-tooltip>
-          </q-btn>
-        </q-bar>
-       
-          <q-card-section>
-            <div class="text-h6">Alert</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            <video ref="videoPlayer" autoplay></video>
-          </q-card-section>
-          <q-card-section class="q-pt-none">
-            <q-btn v-close-popup @click="capturePhoto(curimg)">Capture Photo</q-btn>
-          </q-card-section>
-
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
 <script setup>
-import axios from 'axios';
-import { ref } from 'vue';
-let dialog = ref(false);
-let maximizedToggle = ref(true);
-const videoPlayer = ref(null);
-let curimg = ref(null);
-async function initializeCamera() {
-  console.log(curimg.value);
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    videoPlayer.value.srcObject = stream;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-function capturePhoto(id) {
-  const canvas = document.createElement('canvas');
-  const video = videoPlayer.value;
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-  const imageDataURL = canvas.toDataURL('image/png');
-  console.log(imageDataURL);
-  uploadImage(imageDataURL, id);
-}
-
-async function uploadImage(imageDataURL, id) {
-  try {
-    const response = await axios.post(`/img/${id}`, { image: imageDataURL });
-    // const response = await axios.post('/img', { image: imageDataURL });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// async function getPic(id) {
-//   const { data } = await axios.get('/employees');
-//   data.value = curimg;
-// }
+// import { ref } from 'vue';
+import { useCounterStore } from '@/stores/counter.js';
+const store = useCounterStore();
+store.getData();
 
 const columns = [
   {
@@ -146,123 +62,123 @@ const columns = [
   { name: 'Photo', label: 'Photo', align: 'center', field: 'aaa', sortable: false },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: 'Red Bull Original',
-    image: 'energy.png',
-    cal: 500,
-    price: 2.5,
-    trating: 4,
-    arating: 4.5,
-  },
-  {
-    id: 2,
-    name: 'Monster Ultra Sunrise',
-    image: 'energy.png',
+// const rows = [
+//   {
+//     id: 1,
+//     name: 'Red Bull Original',
+//     image: 'energy.png',
+//     cal: 500,
+//     price: 2.5,
+//     trating: 4,
+//     arating: 4.5,
+//   },
+//   {
+//     id: 2,
+//     name: 'Monster Ultra Sunrise',
+//     image: 'energy.png',
 
-    cal: 100,
-    price: 3.5,
-    trating: 3.5,
-    arating: 3.7,
-  },
+//     cal: 100,
+//     price: 3.5,
+//     trating: 3.5,
+//     arating: 3.7,
+//   },
 
-  {
-    id: 3,
-    name: 'Rockstar Punched',
-    image: 'energy.png',
+//   {
+//     id: 3,
+//     name: 'Rockstar Punched',
+//     image: 'energy.png',
 
-    cal: 250,
-    price: 2.75,
-    trating: 4.1,
-    arating: 4.2,
-  },
+//     cal: 250,
+//     price: 2.75,
+//     trating: 4.1,
+//     arating: 4.2,
+//   },
 
-  {
-    id: 4,
-    name: 'Amp Energy Original',
-    image: 'energy.png',
+//   {
+//     id: 4,
+//     name: 'Amp Energy Original',
+//     image: 'energy.png',
 
-    cal: 300,
-    price: 2.25,
-    trating: 3.9,
-    arating: 4.1,
-  },
+//     cal: 300,
+//     price: 2.25,
+//     trating: 3.9,
+//     arating: 4.1,
+//   },
 
-  {
-    id: 5,
-    name: 'Full Throttle Original',
-    image: 'energy.png',
+//   {
+//     id: 5,
+//     name: 'Full Throttle Original',
+//     image: 'energy.png',
 
-    cal: 160,
-    price: 2.75,
-    trating: 3.5,
-    arating: 3.7,
-  },
+//     cal: 160,
+//     price: 2.75,
+//     trating: 3.5,
+//     arating: 3.7,
+//   },
 
-  {
-    id: 6,
-    name: 'Reign Total Body Fuel',
-    image: 'energy.png',
+//   {
+//     id: 6,
+//     name: 'Reign Total Body Fuel',
+//     image: 'energy.png',
 
-    cal: 200,
-    price: 3.25,
-    trating: 4.2,
-    arating: 4.3,
-  },
-  {
-    id: 7,
-    name: 'Xyience Xenergy',
-    image: 'energy.png',
+//     cal: 200,
+//     price: 3.25,
+//     trating: 4.2,
+//     arating: 4.3,
+//   },
+//   {
+//     id: 7,
+//     name: 'Xyience Xenergy',
+//     image: 'energy.png',
 
-    cal: 120,
-    price: 2.5,
-    trating: 4.0,
-    arating: 4.2,
-  },
-  {
-    id: 8,
-    name: 'Gatorade G2',
-    image: 'energy.png',
+//     cal: 120,
+//     price: 2.5,
+//     trating: 4.0,
+//     arating: 4.2,
+//   },
+//   {
+//     id: 8,
+//     name: 'Gatorade G2',
+//     image: 'energy.png',
 
-    cal: 20,
-    price: 1.75,
-    trating: 3.5,
-    arating: 3.7,
-  },
-  {
-    id: 9,
-    name: 'NOS High Performance Energy',
-    image: 'energy.png',
+//     cal: 20,
+//     price: 1.75,
+//     trating: 3.5,
+//     arating: 3.7,
+//   },
+//   {
+//     id: 9,
+//     name: 'NOS High Performance Energy',
+//     image: 'energy.png',
 
-    cal: 340,
-    price: 2.25,
-    trating: 4.1,
-    arating: 4.3,
-  },
+//     cal: 340,
+//     price: 2.25,
+//     trating: 4.1,
+//     arating: 4.3,
+//   },
 
-  {
-    id: 10,
-    name: 'Bang Energy',
-    image: 'energy.png',
+//   {
+//     id: 10,
+//     name: 'Bang Energy',
+//     image: 'energy.png',
 
-    cal: 160,
-    price: 3.0,
-    trating: 4.0,
-    arating: 4.2,
-  },
+//     cal: 160,
+//     price: 3.0,
+//     trating: 4.0,
+//     arating: 4.2,
+//   },
 
-  {
-    id: 11,
-    name: 'Rip It Energy Fuel',
-    image: 'energy.png',
+//   {
+//     id: 11,
+//     name: 'Rip It Energy Fuel',
+//     image: 'energy.png',
 
-    cal: 500,
-    price: 3.5,
-    trating: 3.9,
-    arating: 4.1,
-  },
-];
+//     cal: 500,
+//     price: 3.5,
+//     trating: 3.9,
+//     arating: 4.1,
+//   },
+// ];
 </script>
 <style>
 video {

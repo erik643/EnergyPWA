@@ -1,4 +1,6 @@
-GET http://localhost:3000/
+GET http://localhost:3000/energy
+###
+GET http://localhost:3000/energy?id=2
 ###
 POST http://localhost:3000/img
 content-type: application/json
