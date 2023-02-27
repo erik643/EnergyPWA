@@ -30,6 +30,8 @@
                 color="primary"
                 @click="(dialog = true), initializeCamera()"
               />
+
+              <q-btn label="Get Photo" color="primary" @click="store.getData()" />
             </q-card-section>
           </q-card>
         </div>
@@ -121,16 +123,13 @@ function capturePhoto(id) {
 async function uploadImage(imageDataURL, id) {
   try {
     const response = await axios.post(`/img/${id}`, { image: imageDataURL });
-    // const response = await axios.post('/img', { image: imageDataURL });
     console.log(response.data);
-    store.getData();
-    // rows[id - 1].image = `uploads/${id}/${response.data}`;
-    // console.log(rows[0]);
   } catch (error) {
     console.error(error);
   }
 }
-// store.getDetail(id);
+
+
 </script>
 <style>
 .my-card {
