@@ -42,7 +42,7 @@ export default defineConfig({
             urlPattern: /.*images\/uploads\/*.*.png/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'roberts-Bilder',
+              cacheName: 'Eriks-Bilder',
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day

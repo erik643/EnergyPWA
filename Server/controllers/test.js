@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import { dbgetData, dbgetDetail } from '../models/test.js';
+import { dbgetData, dbgetDetail, dbAddImg } from '../models/test.js';
 
 const require = createRequire(import.meta.url);
 
@@ -20,7 +20,7 @@ async function saveImg(req, res) {
     }
 
     // Generiere einen eindeutigen Dateinamen für das Bild
-    const fileName = `image_${Date.now()}.png`;
+    const fileName = `${Date.now()}.png`;
     const filePath = path.join(`public/images/uploads/${zusatzPath}/`, fileName);
 
     // Speichere die Bilddatei auf der Festplatte
@@ -30,6 +30,7 @@ async function saveImg(req, res) {
         res.status(500).send('Failed to upload image');
       } else {
         console.log(`Image saved to ${filePath}`);
+        dbAddImg(req.params.id, `images/uploads/${req.params.id}/${fileName}`);
         res.status(200).send(fileName);
         //   res.status(200).send('Image uploaded successfully');
       }

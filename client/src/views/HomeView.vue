@@ -13,7 +13,7 @@
           <template v-slot:body-cell-bild="props">
             <q-td :props="props">
               <div>
-                <img :src="'images/' + props.value" alt="" />
+                <img :src="props.value[0]" alt="bild" />
               </div>
               <div class="my-table-details">
                 {{ props.row.details }}

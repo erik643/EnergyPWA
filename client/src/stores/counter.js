@@ -4,16 +4,15 @@ import axios from 'axios';
 
 export const useCounterStore = defineStore('counter', () => {
   const data = ref([]);
-  let detail = ref([]);
 
   async function getData() {
     const result = await axios.get('/energy');
     data.value = result.data;
   }
-  async function getDetail(id) {
-    const result = await axios.get(`/energy?id=${id}`);
-    detail.value = result.data;
-  }
+  // async function getDetail(id) {
+  //   const result = await axios.get(`/energy?id=${id}`);
+  //   detail.value = result.data;
+  // }
 
-  return { detail, data, getData, getDetail };
+  return { data, getData };
 });
