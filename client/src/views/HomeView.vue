@@ -10,6 +10,7 @@
           row-key="name"
           dark
           color="amber"
+          :rows-per-page-options="[0]"
         >
           <template v-slot:body-cell-bild="props">
             <q-td :props="props">
@@ -45,7 +46,7 @@
 import { useCounterStore } from '@/stores/counter.js';
 const store = useCounterStore();
 store.getData();
-
+//aknd
 const columns = [
   {
     name: 'name',

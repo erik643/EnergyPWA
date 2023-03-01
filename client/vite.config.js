@@ -4,6 +4,8 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 import manifest from './mainfest.js';
+import { resolve } from 'path';
+import { rm } from 'node:fs/promises';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,6 +17,10 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/images': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/img': {
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
@@ -31,9 +37,16 @@ export default defineConfig({
   },
   build: {
     outDir: '../Server/public',
-    emptyOutDir: true,
+    emptyOutDir: false,
   },
   plugins: [
+    {
+      name: 'Cleaning assets folder',
+      async buildStart() {
+        // eslint-disable-next-line no-undef
+        await rm(resolve(__dirname, '../Server/public/assets'), { recursive: true, force: true });
+      },
+    },
     vue({
       template: { transformAssetUrls },
     }),
