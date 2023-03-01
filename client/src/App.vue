@@ -27,7 +27,7 @@
         <q-route-tab to="/comp" label="Companys" />
         <q-route-tab to="/about" label="Impressum" />
       </q-tabs>
-      <!-- drawer content -->
+      <!-- drawer contentasdasdasdasd -->
     </q-drawer>
 
     <q-page-container>

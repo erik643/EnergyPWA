@@ -46,7 +46,7 @@
 import { useCounterStore } from '@/stores/counter.js';
 const store = useCounterStore();
 store.getData();
-//aknd
+//aknddfsdfsdfsdfsdfsdf
 const columns = [
   {
     name: 'name',
