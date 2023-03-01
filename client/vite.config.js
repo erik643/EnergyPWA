@@ -21,7 +21,7 @@ export default defineConfig({
   },
   build: {
     outDir: '../Server/public',
-    emptyOutDir: false,
+    emptyOutDir: true,
   },
   plugins: [
     vue({

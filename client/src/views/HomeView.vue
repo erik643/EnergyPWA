@@ -6,6 +6,7 @@
           title="Energys"
           :rows="store.data"
           :columns="columns"
+          :grid="$q.screen.lt.md"
           row-key="name"
           dark
           color="amber"
