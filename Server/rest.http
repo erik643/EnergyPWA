@@ -1,6 +1,6 @@
 GET http://localhost:3000/energy
 ###
-GET http://localhost:3000/energy?id=2
+GET http://localhost:3000/energy/3
 ###
 POST http://localhost:3000/img
 content-type: application/json

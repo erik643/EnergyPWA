@@ -1,27 +1,27 @@
 <template>
   <div class="container d-flex flex-column align-items-center">
     <div class="row">
-      <div class="col">
-        <q-carousel animated v-model="slide" arrows navigation infinite>
+      <div class="col-12 col-md-6">
+        <q-carousel animated v-model="slide" swipeable arrows navigation infinite>
           <q-carousel-slide
-            v-for="(image, id) of detail.image"
+            v-for="(image, id) of store.detail.image"
             :key="image"
             :name="id + 1"
             :img-src="`../${image}`"
           />
         </q-carousel>
       </div>
-      <div class="col">
+      <div class="col-12 col-md-6">
         <div>
           <q-card flat bordered class="my-card">
             <q-card-section>
-              <div class="text-h6">{{ detail.name }}</div>
+              <div class="text-h6">{{ store.detail.name }}</div>
             </q-card-section>
 
-            <q-card-section class="q-pt-none">{{ detail.cal }} </q-card-section>
-            <q-card-section class="q-pt-none">{{ detail.price }} </q-card-section>
-            <q-card-section class="q-pt-none">{{ detail.trating }} </q-card-section>
-            <q-card-section class="q-pt-none">{{ detail.arating }} </q-card-section>
+            <q-card-section class="q-pt-none">{{ store.detail.cal }} </q-card-section>
+            <q-card-section class="q-pt-none">{{ store.detail.price }} </q-card-section>
+            <q-card-section class="q-pt-none">{{ store.detail.trating }} </q-card-section>
+            <q-card-section class="q-pt-none">{{ store.detail.arating }} </q-card-section>
             <q-separator inset />
 
             <q-card-section>
@@ -30,8 +30,6 @@
                 color="primary"
                 @click="(dialog = true), initializeCamera()"
               />
-
-              <q-btn label="Get Photo" color="primary" @click="store.getData()" />
             </q-card-section>
           </q-card>
         </div>
@@ -76,7 +74,7 @@
           <video ref="videoPlayer" autoplay></video>
         </q-card-section>
         <q-card-section class="q-pt-none row justify-center">
-          <q-btn v-close-popup @click="capturePhoto(id)">Capture Photo</q-btn>
+          <q-btn v-close-popup @click="captureAndUpload()">Capture Photo</q-btn>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -90,16 +88,22 @@ import axios from 'axios';
 let dialog = ref(false);
 let slide = ref(1);
 const store = useCounterStore();
+
 const id = window.location.pathname.split('/')[2];
-store.getData();
-const detail = ref(store.data[id - 1]);
-console.log(detail.value);
+store.getDetail(id);
+// const detail = ref(store.data[id - 1]);
+
 const videoPlayer = ref(null);
 let maximizedToggle = ref(true);
 
 // store.getImg(id);
 // console.log(store.imgs);
+async function captureAndUpload() {
+  await capturePhoto(id);
+  await store.getDetail(id);
 
+  // slide.value = store.detail.value.image.length;
+}
 async function initializeCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -109,7 +113,7 @@ async function initializeCamera() {
   }
 }
 
-function capturePhoto(id) {
+async function capturePhoto(id) {
   const canvas = document.createElement('canvas');
   const video = videoPlayer.value;
   canvas.width = video.videoWidth;
@@ -117,7 +121,8 @@ function capturePhoto(id) {
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
   const imageDataURL = canvas.toDataURL('image/png');
   console.log(imageDataURL);
-  uploadImage(imageDataURL, id);
+  stopCamera();
+  await uploadImage(imageDataURL, id);
 }
 
 async function uploadImage(imageDataURL, id) {
@@ -129,7 +134,16 @@ async function uploadImage(imageDataURL, id) {
   }
 }
 
+function stopCamera() {
+  const stream = videoPlayer.value.srcObject;
+  const tracks = stream.getTracks();
 
+  tracks.forEach((track) => {
+    track.stop();
+  });
+
+  videoPlayer.value.srcObject = null;
+}
 </script>
 <style>
 .my-card {

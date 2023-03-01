@@ -38,11 +38,12 @@ async function saveImg(req, res) {
   });
 }
 async function getData(req, res) {
-  if (req.query.id) {
-    res.status(200).json(await dbgetDetail(req.query.id));
-  } else {
-    res.status(200).json(await dbgetData());
-  }
+  res.status(200).json(await dbgetData());
 }
 
-export { saveImg, getData };
+async function getDetail(req, res) {
+  res.set('Cache-Control', 'no-store');
+  res.status(200).json(await dbgetDetail(req.params.id));
+}
+
+export { saveImg, getData, getDetail };

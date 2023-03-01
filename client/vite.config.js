@@ -12,12 +12,12 @@ export default defineConfig({
   },
   preview: {
     port: 5555,
-    proxy: {
-      '/energy': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-      },
-    },
+    // proxy: {
+    //   '/energy': {
+    //     target: 'http://localhost:3000',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
   build: {
     outDir: '../Server/public',
