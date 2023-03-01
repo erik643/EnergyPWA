@@ -9,6 +9,16 @@ import manifest from './mainfest.js';
 export default defineConfig({
   server: {
     port: 8080,
+    proxy: {
+      '/energy': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/images': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port: 5555,

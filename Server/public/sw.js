@@ -78,17 +78,17 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "assets/index.0fc72b5e.js",
+    "url": "assets/index.a4cf4880.js",
     "revision": null
   }, {
     "url": "assets/index.aed1c251.css",
     "revision": null
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
   }, {
     "url": "index.html",
-    "revision": "b11846d837a985ff858b94885acedc14"
+    "revision": "2709644a20e153573a7576b611c21013"
   }, {
     "url": "registerSW.js",
     "revision": "1872c500de691dce40960bb85481de07"
@@ -103,7 +103,13 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "revision": "1ba2ae710d927f13d483fd5d1e548c9b"
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
+  }, {
+    "url": "images/energy.png",
+    "revision": "35d96dd3e11ea0e946fab4107393a77c"
+  }, {
+    "url": "images/EnergyRe.png",
+    "revision": "f3272d40bb7e225e8a72759411909c75"
   }, {
     "url": "webfonts/fa-brands-400.ttf",
     "revision": "f34b6a2a94e1a01e4c21fa84dcbf6667"
@@ -128,12 +134,6 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
   }, {
     "url": "webfonts/fa-v4compatibility.woff2",
     "revision": "43044320c62b2b1397b8a0d535dea6a7"
-  }, {
-    "url": "images/energy.png",
-    "revision": "35d96dd3e11ea0e946fab4107393a77c"
-  }, {
-    "url": "images/EnergyRe.png",
-    "revision": "f3272d40bb7e225e8a72759411909c75"
   }, {
     "url": "images/icons/android-chrome-256x256.png",
     "revision": "c62f0deb0024fdd1e9e79c8b7f1386a5"
