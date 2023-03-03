@@ -91,7 +91,7 @@ const store = useCounterStore();
 
 const id = window.location.pathname.split('/')[2];
 store.getDetail(id);
-// const detail = ref(store.data[id - 1]);
+// const detail = ref(store.data[id - 1]);ubbuzbub
 
 const videoPlayer = ref(null);
 let maximizedToggle = ref(true);
@@ -102,7 +102,7 @@ async function captureAndUpload() {
   await capturePhoto(id);
   await store.getDetail(id);
 
-  // slide.value = store.detail.value.image.length;
+  slide.value = 2;
 }
 async function initializeCamera() {
   try {

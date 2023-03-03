@@ -17,6 +17,7 @@
         <q-route-tab to="/comp" label="Companys" />
 
         <q-route-tab to="/about" label="Impressum" />
+        <q-route-tab to="/login" label="loginTest" />
       </q-tabs>
     </q-header>
 
