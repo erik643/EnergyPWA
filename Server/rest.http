@@ -8,3 +8,21 @@ content-type: application/json
 {
     "image": "sample"
 }
+###
+POST http://localhost:3000/user
+content-type: application/json
+
+{
+    "firstname": "Erik",
+    "username": "Nishi",
+    "pwd": "Fortnite"
+}
+###
+GET http://localhost:3000/user
+content-type: application/json
+
+{
+    "username": "Nishi",
+    "pwd": "Fortnite"
+}
+###

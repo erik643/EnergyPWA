@@ -1,12 +1,19 @@
 import { createRequire } from 'module';
-import { dbgetData, dbgetDetail, dbAddImg } from '../models/test.js';
+import {
+  dbgetData,
+  dbgetDetail,
+  dbAddImg,
+  dbAddUser,
+  dbgetUser,
+  dbcheckUser,
+} from '../models/test.js';
 
 const require = createRequire(import.meta.url);
 
 const fs = require('fs');
 const path = require('path');
 
-async function saveImg(req, res) {
+export async function saveImg(req, res) {
   const imageDataURL = req.body.image;
   const imageData = imageDataURL.replace(/^data:image\/\w+;base64,/, '');
   const imageBuffer = Buffer.from(imageData, 'base64');
@@ -37,13 +44,20 @@ async function saveImg(req, res) {
     });
   });
 }
-async function getData(req, res) {
+export async function getData(req, res) {
   res.status(200).json(await dbgetData());
 }
-
-async function getDetail(req, res) {
+export async function getUser(req, res) {
+  res.status(200).json(await dbgetUser(req.body));
+}
+export async function getDetail(req, res) {
   res.set('Cache-Control', 'no-store');
   res.status(200).json(await dbgetDetail(req.params.id));
 }
-
-export { saveImg, getData, getDetail };
+export async function addUser(req, res) {
+  if ((await dbcheckUser(req.body.username)) == null) {
+    res.status(200).json(await dbAddUser(req.body));
+  } else {
+    res.status(555).send();
+  }
+}

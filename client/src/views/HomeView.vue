@@ -183,6 +183,9 @@ const columns = [
 // ];
 </script>
 <style>
+body{
+  font-family: 'alynx',Helvetica, Arial;
+}
 video {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg); /* Safari and Chrome */

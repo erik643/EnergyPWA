@@ -5,11 +5,11 @@ import axios from 'axios';
 export const useCounterStore = defineStore('counter', () => {
   const data = ref([]);
   const detail = ref({});
+  const profile = ref({});
 
   async function getData() {
     const result = await axios.get('/energy');
     data.value = result.data;
-    console.log(this.data);
   }
 
   async function getDetail(id) {
@@ -17,5 +17,11 @@ export const useCounterStore = defineStore('counter', () => {
     detail.value = result.data;
   }
 
-  return { data, getData, detail, getDetail };
+  async function addUser(obj) {
+    const result = await axios.post(`/user/`, obj);
+    profile.value = result.data;
+    console.log(profile);
+  }
+
+  return { profile, data, getData, detail, getDetail, addUser };
 });
