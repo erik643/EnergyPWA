@@ -2,7 +2,7 @@
   <div class="container row justify-center">
     <q-card v-if="login" class="my-card">
       <q-card-section class="row justify-center">
-        <div class="text-h5 text-weight-bolder text-warning">Login</div>
+        <div class="text-h5 text-weight-bolder ">Login</div>
       </q-card-section>
 
       <!-- ------------------------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ async function onSubmit() {
       Notify.create({
         message: 'No User with that information, try something else and try to be lucky (ged gud)',
         position: 'top',
-        color: 'warning',
+        color: 'info',
       });
     }
   } else {
