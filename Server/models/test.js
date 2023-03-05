@@ -24,14 +24,14 @@ export const dbAddUser = async (obj) => {
   );
   return rows[0];
 };
-export const dbcheckUser = async (obj) => {
-  const { rows } = await query('select id from accounts where username = $1;', [obj]);
-  return rows[0];
-};
 export const dbgetUser = async (obj) => {
-  const { rows } = await query('select id from accounts where username = $1 AND pwd=$2;', [
+  const { rows } = await query('select * from accounts where username = $1 AND pwd=$2;', [
     obj.username,
     obj.pwd,
   ]);
   return rows[0];
+};
+export const dbgetAllUsers = async () => {
+  const { rows } = await query('select username from accounts;');
+  return rows;
 };

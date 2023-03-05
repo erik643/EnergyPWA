@@ -41,7 +41,6 @@
           <q-route-tab to="/home" label="Home" />
           <q-route-tab to="/comp" label="Companys" />
           <q-route-tab to="/about" label="Impressum" />
-          <q-route-tab to="/" label="Login" />
         </q-tabs>
       </div>
     </q-drawer>

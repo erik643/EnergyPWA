@@ -18,11 +18,13 @@ content-type: application/json
     "pwd": "Fortnite"
 }
 ###
-GET http://localhost:3000/user
+PATCH http://localhost:3000/user
 content-type: application/json
 
 {
     "username": "Nishi",
     "pwd": "Fortnite"
 }
+###
+GET http://localhost:3000/users
 ###

@@ -13,7 +13,7 @@
           <q-input
             rounded
             outlined
-            v-model="name"
+            v-model="username"
             label="Username *"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || 'Please type something']"
@@ -23,6 +23,7 @@
           <q-input
             rounded
             outlined
+            type="password"
             v-model="pwd"
             label="Password *"
             lazy-rules
@@ -48,7 +49,7 @@
 
     <!-- ------------------------------------------------------------------------------------------------ -->
     <!-- SIGN IN -->
-    <q-card v-if="!login" class="my-card" >
+    <q-card v-if="!login" class="my-card">
       <q-card-section class="row justify-center">
         <div class="text-h5 text-weight-bolder">Sign In</div>
       </q-card-section>
@@ -70,13 +71,17 @@
             v-model="username"
             label="Username *"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type something',
+              (val) => !check(val) || 'Taken',
+            ]"
           />
         </q-card-section>
         <q-card-section>
           <q-input
             rounded
             outlined
+            type="password"
             v-model="pwd"
             label="Password *"
             lazy-rules
@@ -105,8 +110,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useCounterStore } from '@/stores/counter.js';
 import router from '@/router';
+import { Notify } from 'quasar';
+import { useCounterStore } from '@/stores/counter.js';
 const store = useCounterStore();
 const name = ref(null);
 const signname = ref(null);
@@ -114,10 +120,35 @@ const username = ref(null);
 const login = ref(true);
 const pwd = ref(null);
 const accept = ref(false);
+store.getAllUsers();
+store.profile = {};
+
+function check(user) {
+  for (const name of store.check) {
+    if (name == user) {
+      return true;
+    }
+  }
+}
 
 async function onSubmit() {
   if (login.value) {
-    console.log('sadasd');
+    const user = {
+      username: username.value,
+      pwd: pwd.value,
+    };
+
+    await store.loginUser(user);
+
+    if (store.profile != 'Haram') {
+      router.push('/home');
+    } else {
+      Notify.create({
+        message: 'No User with that information, try something else and try to be lucky (ged gud)',
+        position: 'top',
+        color: 'warning',
+      });
+    }
   } else {
     const user = {
       firstname: signname.value,

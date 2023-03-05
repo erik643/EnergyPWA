@@ -5,7 +5,7 @@ import {
   dbAddImg,
   dbAddUser,
   dbgetUser,
-  dbcheckUser,
+  dbgetAllUsers,
 } from '../models/test.js';
 
 const require = createRequire(import.meta.url);
@@ -47,17 +47,23 @@ export async function saveImg(req, res) {
 export async function getData(req, res) {
   res.status(200).json(await dbgetData());
 }
+
 export async function getUser(req, res) {
-  res.status(200).json(await dbgetUser(req.body));
+  const result = await dbgetUser(req.body);
+  if (result == null) {
+    res.status(200).json('Haram');
+  } else {
+    res.status(200).json(await dbgetUser(req.body));
+  }
 }
+
 export async function getDetail(req, res) {
   res.set('Cache-Control', 'no-store');
   res.status(200).json(await dbgetDetail(req.params.id));
 }
 export async function addUser(req, res) {
-  if ((await dbcheckUser(req.body.username)) == null) {
-    res.status(200).json(await dbAddUser(req.body));
-  } else {
-    res.status(555).send();
-  }
+  res.status(200).json(await dbAddUser(req.body));
+}
+export async function getAllUsers(req, res) {
+  res.status(200).json(await dbgetAllUsers());
 }
