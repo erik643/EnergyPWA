@@ -42,6 +42,13 @@
           <q-route-tab to="/comp" label="Companys" />
           <q-route-tab to="/about" label="Impressum" />
         </q-tabs>
+        <q-btn
+          color="warning"
+          @click="logOut()"
+          class="full-width absolute-bottom"
+          text-color="white"
+          label="Log out"
+        />
       </div>
     </q-drawer>
 
@@ -87,6 +94,7 @@
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 import { useCounterStore } from '@/stores/counter.js';
+import router from '@/router';
 const store = useCounterStore();
 // const leftDrawerOpen = ref(false);
 
@@ -95,6 +103,16 @@ const store = useCounterStore();
 // };
 
 const drawer = ref(false);
+
+function logOut() {
+  localStorage.removeItem('user');
+  store.profile = {};
+
+  router.push('/');
+}
+if (JSON.parse(localStorage.getItem('user')) != null) {
+  store.profile = JSON.parse(localStorage.getItem('user'));
+}
 </script>
 
 <style>

@@ -2,7 +2,7 @@
   <div class="container row justify-center">
     <q-card v-if="login" class="my-card">
       <q-card-section class="row justify-center">
-        <div class="text-h5 text-weight-bolder ">Login</div>
+        <div class="text-h5 text-weight-bolder">Login</div>
       </q-card-section>
 
       <!-- ------------------------------------------------------------------------------------------------
@@ -121,7 +121,10 @@ const login = ref(true);
 const pwd = ref(null);
 const accept = ref(false);
 store.getAllUsers();
-store.profile = {};
+
+if (store.profile.username != undefined) {
+  router.push('/home');
+}
 
 function check(user) {
   for (const name of store.check) {
@@ -142,6 +145,9 @@ async function onSubmit() {
 
     if (store.profile != 'Haram') {
       router.push('/home');
+      if (accept.value) {
+        localStorage.setItem('user', JSON.stringify(store.profile));
+      }
     } else {
       Notify.create({
         message: 'No User with that information, try something else and try to be lucky (ged gud)',
@@ -156,6 +162,9 @@ async function onSubmit() {
       pwd: pwd.value,
     };
     await store.addUser(user);
+    if (accept.value) {
+      localStorage.setItem('user', JSON.stringify(store.profile));
+    }
     router.push('/home');
   }
 }

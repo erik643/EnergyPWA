@@ -44,9 +44,14 @@
 <script setup>
 // import { ref } from 'vue';
 import { useCounterStore } from '@/stores/counter.js';
+import router from '@/router';
 const store = useCounterStore();
 store.getData();
 //aknddfsdfsdfsdfsdfsdf
+
+if (store.profile.username == undefined) {
+  router.push('/');
+}
 const columns = [
   {
     name: 'name',
@@ -183,8 +188,8 @@ const columns = [
 // ];
 </script>
 <style>
-body{
-  font-family: 'alynx',Helvetica, Arial;
+body {
+  font-family: 'alynx', Helvetica, Arial;
 }
 video {
   transform: rotateY(180deg);

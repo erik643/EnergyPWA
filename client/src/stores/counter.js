@@ -31,7 +31,7 @@ export const useCounterStore = defineStore('counter', () => {
   async function loginUser(obj) {
     const result = await axios.patch('/user', obj);
     profile.value = result.data;
-
+    console.log(profile.value);
   }
 
   return { profile, data, getData, detail, getDetail, addUser, check, getAllUsers, loginUser };

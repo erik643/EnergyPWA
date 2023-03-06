@@ -2,13 +2,27 @@
   <div class="container d-flex flex-column align-items-center">
     <div class="q-pa-md">
       <div class="q-pa-md">
-        <q-table title="Companys" :rows="rows" :columns="columns" row-key="name" dark color="amber" />
+        <q-table
+          title="Companys"
+          :rows="rows"
+          :columns="columns"
+          row-key="name"
+          dark
+          color="amber"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useCounterStore } from '@/stores/counter.js';
+import router from '@/router';
+const store = useCounterStore();
+if (store.profile.username == undefined) {
+  router.push('/');
+}
+
 const columns = [
   {
     name: 'name',

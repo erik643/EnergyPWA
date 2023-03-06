@@ -6,4 +6,11 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useCounterStore } from '@/stores/counter.js';
+import router from '@/router';
+const store = useCounterStore();
+if (store.profile.username == undefined) {
+  router.push('/');
+}
+</script>

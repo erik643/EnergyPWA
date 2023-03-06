@@ -82,12 +82,16 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useCounterStore } from '@/stores/counter.js';
 import { ref } from 'vue';
 import axios from 'axios';
 let dialog = ref(false);
 let slide = ref(1);
 const store = useCounterStore();
+if (store.profile.username == undefined) {
+  router.push('/');
+}
 
 const id = window.location.pathname.split('/')[2];
 store.getDetail(id);
