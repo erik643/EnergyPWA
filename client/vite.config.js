@@ -74,7 +74,7 @@ export default defineConfig({
         mode: 'development',
         runtimeCaching: [
           {
-            urlPattern: /.*images\/uploads\/*.*.png/,
+            urlPattern: /.*images\/*.*.*/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'Eriks-Bilder',

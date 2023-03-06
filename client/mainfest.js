@@ -1,10 +1,10 @@
 export default {
-  name: 'Employees PWA Project',
-  short_name: 'employeesPWA',
+  name: 'Energy PWA',
+  short_name: 'Energy',
   start_url: '/',
   display: 'standalone',
   background_color: '#ffffff',
-  lang: 'en',
+  lang: 'de',
   scope: '/',
   theme_color: '#ffffff',
   id: '/',

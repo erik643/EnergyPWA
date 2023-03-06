@@ -78,17 +78,17 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "assets/index.947fb9e7.js",
+    "url": "assets/index.af0488f7.css",
     "revision": null
   }, {
-    "url": "assets/index.aed1c251.css",
+    "url": "assets/index.f43b0927.js",
     "revision": null
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
   }, {
     "url": "index.html",
-    "revision": "abda2fdfdee4571908861749c1fd693c"
+    "revision": "454dac263f844f09cb25a85cdfddf7fd"
   }, {
     "url": "registerSW.js",
     "revision": "1872c500de691dce40960bb85481de07"
@@ -103,7 +103,7 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "revision": "1ba2ae710d927f13d483fd5d1e548c9b"
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
   }, {
     "url": "images/energy.png",
     "revision": "35d96dd3e11ea0e946fab4107393a77c"
@@ -154,11 +154,11 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "revision": "91bf21147cecff112dfc4ca687c96801"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "09fdc3bc27ef274a18304014878010e2"
+    "revision": "006b057c03997606c9c74e27d12d4dc6"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
-  workbox.registerRoute(/.*images\/uploads\/*.*.png/, new workbox.CacheFirst({
+  workbox.registerRoute(/.*images\/*.*.*/, new workbox.CacheFirst({
     "cacheName": "Eriks-Bilder",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 50,

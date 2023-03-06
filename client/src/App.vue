@@ -27,10 +27,10 @@
         </q-list>
       </q-scroll-area> -->
       <div>
-        <q-img src="images/bg2.jpg" style="height: 150px">
+        <q-img :src="'/images/bg2.jpg'" style="height: 150px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
-              <img src="images/pfp.jpg" />
+              <img :src="'/images/pfp.jpg'" />
             </q-avatar>
             <div class="text-weight-bold">{{ store.profile.firstname }}</div>
             <div>@{{ store.profile.username }}</div>
