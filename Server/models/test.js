@@ -19,8 +19,8 @@ export const dbAddImg = async (id, file) => {
 
 export const dbAddUser = async (obj) => {
   const { rows } = await query(
-    'INSERT INTO accounts (firstname,username,pwd) VALUES ($1,$2,$3) returning *',
-    [obj.firstname, obj.username, obj.pwd],
+    'INSERT INTO accounts (firstname,username,pwd,salt) VALUES ($1,$2,$3,$4) returning *',
+    [obj.firstname, obj.username, obj.pwd, obj.salt],
   );
   return rows[0];
 };

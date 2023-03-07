@@ -22,8 +22,8 @@ PATCH http://localhost:3000/user
 content-type: application/json
 
 {
-    "username": "Nishi",
-    "pwd": "Fortnite"
+    "username": "sagus",
+    "pwd": "abc"
 }
 ###
 GET http://localhost:3000/users

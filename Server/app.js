@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { createRequire } from 'module';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
@@ -19,7 +19,7 @@ const app = express();
 app.use(bodyParser.json({ limit: '10mb' }));
 
 app.use(morgan('dev'));
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 
 app.use(express.static(path.join(dirname, '/public')));

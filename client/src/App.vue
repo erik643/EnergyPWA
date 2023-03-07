@@ -29,9 +29,19 @@
       <div>
         <q-img :src="'/images/bg2.jpg'" style="height: 150px">
           <div class="absolute-bottom bg-transparent">
-            <q-avatar size="56px" class="q-mb-sm">
+            <!-- ------------------------------------------------------------------- -->
+
+            <!-- <q-avatar size="56px" class="q-mb-sm">
               <img :src="'/images/pfp.jpg'" />
-            </q-avatar>
+            </q-avatar> -->
+
+            <q-btn @click="changePfp()" round>
+              <q-avatar size="56px">
+                <img :src="'/images/pfp.jpg'" />
+              </q-avatar>
+            </q-btn>
+
+            <!-- -------------------------------------------- -->
             <div class="text-weight-bold">{{ store.profile.firstname }}</div>
             <div>@{{ store.profile.username }}</div>
           </div>
@@ -103,6 +113,10 @@ const store = useCounterStore();
 // };
 
 const drawer = ref(false);
+
+function changePfp() {
+  console.log('changed');
+}
 
 function logOut() {
   localStorage.removeItem('user');

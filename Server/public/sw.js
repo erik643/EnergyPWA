@@ -78,17 +78,17 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
+    "url": "assets/index.4df13b08.js",
+    "revision": null
+  }, {
     "url": "assets/index.af0488f7.css",
     "revision": null
   }, {
-    "url": "assets/index.f43b0927.js",
-    "revision": null
-  }, {
     "url": "css/all.min.css",
-    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
+    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
   }, {
     "url": "index.html",
-    "revision": "454dac263f844f09cb25a85cdfddf7fd"
+    "revision": "afb402efb538cb5af45d44d8c929f0f0"
   }, {
     "url": "registerSW.js",
     "revision": "1872c500de691dce40960bb85481de07"
@@ -103,7 +103,7 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "revision": "1ba2ae710d927f13d483fd5d1e548c9b"
   }, {
     "url": "css/all.min.css",
-    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
+    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
   }, {
     "url": "images/energy.png",
     "revision": "35d96dd3e11ea0e946fab4107393a77c"
