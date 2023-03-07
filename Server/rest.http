@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "firstname": "Erik",
-    "username": "Nishi",
+    "username": "Nishii",
     "pwd": "Fortnite"
 }
 ###
@@ -22,9 +22,13 @@ PATCH http://localhost:3000/user
 content-type: application/json
 
 {
-    "username": "sagus",
-    "pwd": "abc"
+    "username": "Nishii",
+    "pwd": "Fortnite"
 }
 ###
 GET http://localhost:3000/users
+###
+
+GET http://localhost:3000/salt/e
+
 ###

@@ -7,6 +7,7 @@ import {
   addUser,
   getUser,
   getAllUsers,
+  getsaltt,
 } from '../controllers/test.js';
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.post('/img/:id', asyncHandler(saveImg));
 router.post('/user', asyncHandler(addUser));
 router.patch('/user', asyncHandler(getUser));
 router.get('/users', asyncHandler(getAllUsers));
+router.get('/salt/:user', asyncHandler(getsaltt));
 
 // router.get('/img/:id', asyncHandler(getImg));
 
