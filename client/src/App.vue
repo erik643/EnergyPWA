@@ -4,13 +4,37 @@
   <q-layout view="hHh Lpr lff">
     <q-header elevated class="bg-warning">
       <q-toolbar>
-        <q-btn class="absolute" flat @click="drawer = !drawer" round dense icon="menu" />
+        <q-btn
+          class="desktop-hide absolute"
+          flat
+          @click="drawer = !drawer"
+          round
+          dense
+          icon="menu"
+        />
 
+        <q-tabs class="mobile-hide absolute" align="left">
+          <q-route-tab to="/" label="Home" />
+          <q-route-tab to="/comp" label="Companys" />
+
+          <q-route-tab to="/about" label="Impressum" />
+        </q-tabs>
         <q-toolbar-title class="text-center header text-info text-h4">Energy</q-toolbar-title>
+        <q-avatar class="mobile-hide" size="42px">
+          <img :src="'/images/pfp.jpg'" />
+        </q-avatar>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="drawer" :width="300" :breakpoint="500" overlay bordered class="bg-grey-3">
+    <q-drawer
+      v-model="drawer"
+      :width="300"
+      :breakpoint="500"
+      behavior="mobile"
+      overlay
+      bordered
+      class="bg-grey-3"
+    >
       <!-- <q-scroll-area class="fit">
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
@@ -76,13 +100,7 @@
         </q-avatar>
       </q-toolbar>
 
-      <q-tabs class="mobile-hide" align="left">
-        <q-route-tab to="/" label="Home" />
-        <q-route-tab to="/comp" label="Companys" />
 
-        <q-route-tab to="/about" label="Impressum" />
-        <q-route-tab to="/login" label="loginTest" />
-      </q-tabs>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay behavior="mobile" bordered>

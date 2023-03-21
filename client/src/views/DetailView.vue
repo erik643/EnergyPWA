@@ -1,5 +1,47 @@
 <template>
   <div class="container d-flex flex-column align-items-center">
+    <div class="row justify-center">
+      <h3>Reviews</h3>
+    </div>
+
+    <div class="row justify-center">
+      <q-card v-for="r of store.detail.reviews" :key="r" class="my-card col-12 col-md-2">
+        <img :src="`../${r.image}`" />
+
+        <q-card-section>
+          <div class="text-h6">{{ r.title }}</div>
+          <div class="text-subtitle2">{{ r.review }}</div>
+        </q-card-section>
+
+        <q-card-section>
+          Taste
+          <q-rating
+            v-model="r.taste"
+            size="2em"
+            color="orange"
+            readonly
+            icon-selected="star"
+            icon-half="star_half"
+          />
+        </q-card-section>
+
+        <q-card-section>
+          Overall
+          <q-rating
+            v-model="r.overall"
+            size="2em"
+            color="orange"
+            readonly
+            icon-selected="star"
+            icon-half="star_half"
+          />
+        </q-card-section>
+      </q-card>
+    </div>
+
+    <!--
+
+
     <div class="row">
       <div class="col-12 col-md-6">
         <q-carousel animated v-model="slide" swipeable arrows navigation infinite>
@@ -25,16 +67,34 @@
             <q-separator inset />
 
             <q-card-section>
-              <q-btn
-                label="Take a Photo"
-                color="primary"
-                @click="(dialog = true), initializeCamera()"
-              />
+
             </q-card-section>
           </q-card>
         </div>
       </div>
-    </div>
+    </div> -->
+    <q-btn round class="fixed-bottom-right" color="primary" @click="prompt = true">
+      <i class="fa-solid fa-plus"></i>
+    </q-btn>
+
+    <q-dialog v-model="prompt" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Your address</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input dense v-model="address" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-btn label="Make Photo" color="primary" @click="(dialog = true), initializeCamera()" />
+        </q-card-section>
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat label="Add address" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-dialog
       v-model="dialog"
@@ -87,6 +147,8 @@ import { useCounterStore } from '@/stores/counter.js';
 import { ref } from 'vue';
 import axios from 'axios';
 let dialog = ref(false);
+let prompt = ref(false);
+let address = ref('');
 let slide = ref(1);
 const store = useCounterStore();
 if (store.profile.username == undefined) {
@@ -151,12 +213,22 @@ function stopCamera() {
 </script>
 <style>
 .my-card {
-  width: 100%;
-  max-width: 550px;
+  margin-right: 5px;
 }
 
-q-carousel {
+h3 {
+  color: white;
+}
+
+.fixed-bottom-right {
+  margin-bottom: 30px;
+  margin-right: 20px;
+  width: 70px;
+  height: 70px;
+}
+
+/* q-carousel {
   width: 100%;
   max-width: 550px;
-}
+} */
 </style>

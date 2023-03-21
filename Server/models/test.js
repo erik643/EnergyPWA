@@ -8,7 +8,9 @@ export const dbgetData = async () => {
 };
 export const dbgetDetail = async (id) => {
   const { rows } = await query(
-    'select id,name, (select array_agg(image) as "image" from images where id = e.id),cal,price,trating,arating from energys e where id=$1;',
+    `select id,name, (select json_agg(json_build_object('image', image, 'title', title,'review',review,'taste',trating,'overall'
+    ,arating)) AS "reviews" from images where id = e.id)
+    from energys e join images i using(id) where id = $1; `,
     [id],
   );
   return rows[0];

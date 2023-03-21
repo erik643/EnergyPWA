@@ -54,15 +54,19 @@ export async function getUser(req, res) {
   const salt = await getsalt(req.body.username);
 
   const user = req.body;
-  user.pwd = bcrypt.hashSync(req.body.pwd, salt.salt);
-
-  console.log(user);
-  const result = await dbgetUser(user);
-
-  if (result == null) {
+  if (salt === undefined) {
     res.status(200).json('Haram');
   } else {
-    res.status(200).json(await dbgetUser(user));
+    user.pwd = bcrypt.hashSync(req.body.pwd, salt.salt);
+
+    console.log(user);
+    const result = await dbgetUser(user);
+
+    if (result == null) {
+      res.status(200).json('Haram');
+    } else {
+      res.status(200).json(await dbgetUser(user));
+    }
   }
 }
 

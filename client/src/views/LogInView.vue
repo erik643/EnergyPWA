@@ -181,5 +181,6 @@ function onReset() {
 <style lang="scss">
 .my-card {
   margin-top: 3%;
+  min-width: 550px;
 }
 </style>

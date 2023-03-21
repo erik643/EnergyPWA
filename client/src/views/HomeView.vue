@@ -23,6 +23,59 @@
             </q-td>
           </template>
 
+          <template v-slot:item="props">
+            <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+              <q-card>
+                <q-card-section class="text-center">
+                  <strong>{{ props.row.name }}</strong>
+                  <br />
+                </q-card-section>
+                <q-separator />
+                <q-card-section class="text-center">
+                  <div>{{ props.row.cal }} </div>
+                </q-card-section>
+
+
+                <q-card-section >
+                 <img :src="props.row.image[0]" alt="">
+                </q-card-section>
+
+
+
+                <q-card-section class="text-center">
+                  <div>{{ props.row.cal }} </div>
+                </q-card-section>
+
+
+
+                <q-card-section class="text-center">
+                  <div>{{ props.row.cal }} </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </template>
+
+          <template v-slot:body-cell-Trating="props">
+            <q-td :props="props">
+              <div>
+                <q-rating
+                  v-model="props.row.trating"
+                  size="2em"
+                  color="orange"
+                  readonly
+                  icon-selected="star"
+                  icon-half="star_half"
+                />
+              </div>
+            </q-td>
+          </template>
+          <template v-slot:body-cell-Arating="props">
+            <q-td :props="props">
+              <div>
+                <q-rating v-model="props.row.arating" size="2em" color="orange" readonly />
+              </div>
+            </q-td>
+          </template>
           <template v-slot:body-cell-Photo="props">
             <q-td :props="props">
               <div>
@@ -38,7 +91,6 @@
         >
       </div>
     </div>
-    
   </div>
 </template>
 
