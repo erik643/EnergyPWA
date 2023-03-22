@@ -10,38 +10,38 @@ export const useCounterStore = defineStore('counter', () => {
 
   async function getData() {
     const result = await axios.get('/energy');
-    const result2 = await axios.get('/eee');
-
-    for (const i of result.data) {
-      let tas = 0;
-      let ova = 0;
-      let number = 0;
-      for (const ii of result2.data) {
-        if (i.id == ii.id) {
-          tas += ii.trating;
-          ova += ii.overall;
-          number++;
-        }
-      }
-      i.trating = tas / number;
-      i.arating = ova / number;
-
-    }
+    // const result2 = await axios.get('/eee');
 
     // for (const i of result.data) {
-    //   const result2 = await axios.get(`/review/${i.id}`);
-    //   let number = 0;
     //   let tas = 0;
     //   let ova = 0;
-
-    //   for (const iterator of result2.data.reviews) {
-    //     tas += iterator.taste;
-    //     ova += iterator.overall;
-    //     number++;
+    //   let number = 0;
+    //   for (const ii of result2.data) {
+    //     if (i.id == ii.id) {
+    //       tas += ii.trating;
+    //       ova += ii.overall;
+    //       number++;
+    //     }
     //   }
     //   i.trating = tas / number;
     //   i.arating = ova / number;
+
     // }
+
+    for (const i of result.data) {
+      const result2 = await axios.get(`/review/${i.id}`);
+      let number = 0;
+      let tas = 0;
+      let ova = 0;
+
+      for (const iterator of result2.data.reviews) {
+        tas += iterator.taste;
+        ova += iterator.overall;
+        number++;
+      }
+      i.trating = tas / number;
+      i.arating = ova / number;
+    }
 
     data.value = result.data;
   }

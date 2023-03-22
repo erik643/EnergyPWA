@@ -27,13 +27,6 @@
             </q-td>
           </template>
 
-
-
-
-
-
-
-
           <template v-slot:item="props">
             <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
               <q-card class="bg-warning text-info">
@@ -67,8 +60,8 @@
                       size="2em"
                       color="info"
                       readonly
-                      icon-selected="star"
-                      icon-half="star_half"
+                      icon="img:/images/thumbnail/star.svg"
+                      icon-half="img:/images/thumbnail/halfstar.svg"
                     />
                   </div>
 
@@ -77,8 +70,8 @@
 
                     <q-rating
                       v-model="props.row.arating"
-                      icon-selected="star"
-                      icon-half="star_half"
+                      icon="img:/images/thumbnail/star.svg"
+                      icon-half="img:/images/thumbnail/halfstar.svg"
                       size="2em"
                       color="info"
                       readonly
@@ -88,12 +81,13 @@
 
                 <div>
                   <q-tabs align="left">
-                    <q-route-tab class="bg-info" style="color: #181D27;" :to="'/detail/' + props.row.id" label="Reviews" />
+                    <q-route-tab
+                      class="bg-info"
+                      style="color: #181d27"
+                      :to="'/detail/' + props.row.id"
+                      label="Reviews"
+                    />
                   </q-tabs>
-
-
-
-
                 </div>
               </q-card>
             </div>
@@ -107,8 +101,8 @@
                   size="2em"
                   color="info"
                   readonly
-                  icon-selected="star"
-                  icon-half="star_half"
+                  icon="img:/images/thumbnail/star.svg"
+                  icon-half="img:/images/thumbnail/halfstar.svg"
                 />
               </div>
             </q-td>
@@ -118,8 +112,8 @@
               <div>
                 <q-rating
                   v-model="props.row.arating"
-                  icon-selected="star"
-                  icon-half="star_half"
+                  icon="img:/images/thumbnail/star.svg"
+                  icon-half="img:/images/thumbnail/halfstar.svg"
                   size="2em"
                   color="info"
                   readonly
@@ -131,7 +125,11 @@
             <q-td :props="props">
               <div>
                 <q-tabs align="left">
-                  <q-route-tab style="color: #598392;" :to="'/detail/' + props.row.id" label="Reviews" />
+                  <q-route-tab
+                    style="color: #598392"
+                    :to="'/detail/' + props.row.id"
+                    label="Reviews"
+                  />
                 </q-tabs>
               </div>
               <div class="my-table-details">
@@ -292,7 +290,6 @@ const columns = [
 // ];
 </script>
 <style>
-
 video {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg); /* Safari and Chrome */

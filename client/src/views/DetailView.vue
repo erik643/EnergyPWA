@@ -3,14 +3,12 @@
     <div class="row justify-center">
       <h3>Reviews</h3>
     </div>
-<div class="row justify-center">
-  <!-- <h4 style="margin-top: 0px;">{{store.detail.name}}</h4> -->
-
-</div>
+    <div class="row justify-center">
+      <!-- <h4 style="margin-top: 0px;">{{store.detail.name}}</h4> -->
+    </div>
     <div class="row justify-center">
       <q-card
         v-for="r of store.detail.reviews"
-
         :key="r"
         style="margin-right: 5px"
         class="my-card col-10 col-md-2 bg-warning text-info"
@@ -29,8 +27,7 @@
             size="2em"
             color="info"
             readonly
-            icon-selected="star"
-            icon-half="star_half"
+            icon="img:/images/thumbnail/star.svg"
           />
         </q-card-section>
 
@@ -41,8 +38,7 @@
             size="2em"
             color="info"
             readonly
-            icon-selected="star"
-            icon-half="star_half"
+            icon="img:/images/thumbnail/star.svg"
           />
         </q-card-section>
 
@@ -133,8 +129,8 @@
                 v-model="taster"
                 size="2em"
                 color="orange"
-                icon-selected="star"
-                icon-half="star_half"
+                icon="img:/images/thumbnail/star.svg"
+                icon-half="img:/images/thumbnail/halfstar.svg"
               />
             </div>
             <div class="row justify-center">Overall</div>
@@ -143,8 +139,8 @@
                 v-model="overall"
                 size="2em"
                 color="orange"
-                icon-selected="star"
-                icon-half="star_half"
+                icon="img:/images/thumbnail/star.svg"
+                icon-half="img:/images/thumbnail/halfstar.svg"
               />
             </div>
             <div class="row justify-center">
@@ -321,7 +317,8 @@ function stopCamera() {
   margin-right: 5px;
 }
 
-h3,h4 {
+h3,
+h4 {
   color: rgb(24, 29, 39);
   font-family: alynx;
 }
