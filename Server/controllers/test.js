@@ -7,6 +7,8 @@ import {
   dbgetUser,
   dbgetAllUsers,
   getsalt,
+  delrev,
+  dbgetallRevs,
 } from '../models/test.js';
 
 const require = createRequire(import.meta.url);
@@ -16,6 +18,11 @@ const fs = require('fs');
 const path = require('path');
 
 export async function saveImg(req, res) {
+  if (req.body.image === '') {
+    dbAddImg(req.params.id, 'images/icons/placeholder.png', req.body);
+    res.status(200).send('ok');
+    return;
+  }
   const imageDataURL = req.body.image;
   const imageData = imageDataURL.replace(/^data:image\/\w+;base64,/, '');
   const imageBuffer = Buffer.from(imageData, 'base64');
@@ -39,7 +46,7 @@ export async function saveImg(req, res) {
         res.status(500).send('Failed to upload image');
       } else {
         console.log(`Image saved to ${filePath}`);
-        dbAddImg(req.params.id, `images/uploads/${req.params.id}/${fileName}`);
+        dbAddImg(req.params.id, `images/uploads/${req.params.id}/${fileName}`, req.body);
         res.status(200).send(fileName);
         //   res.status(200).send('Image uploaded successfully');
       }
@@ -49,7 +56,9 @@ export async function saveImg(req, res) {
 export async function getData(req, res) {
   res.status(200).json(await dbgetData());
 }
-
+export async function getallrevs(req, res) {
+  res.status(200).json(await dbgetallRevs());
+}
 export async function getUser(req, res) {
   const salt = await getsalt(req.body.username);
 
@@ -73,6 +82,9 @@ export async function getUser(req, res) {
 export async function getDetail(req, res) {
   res.set('Cache-Control', 'no-store');
   res.status(200).json(await dbgetDetail(req.params.id));
+}
+export async function delrevs(req, res) {
+  res.status(200).json(await delrev(req.params.id));
 }
 export async function addUser(req, res) {
   const salt = bcrypt.genSaltSync(10);

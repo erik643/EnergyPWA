@@ -1,6 +1,12 @@
 GET http://localhost:3000/energy
 ###
-GET http://localhost:3000/energy/1
+GET http://localhost:3000/review/1
+###
+
+get http://localhost:3000/eee
+
+###
+delete http://localhost:3000/img/1
 ###
 POST http://localhost:3000/img
 content-type: application/json

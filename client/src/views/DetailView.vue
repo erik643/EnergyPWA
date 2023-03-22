@@ -3,9 +3,18 @@
     <div class="row justify-center">
       <h3>Reviews</h3>
     </div>
+<div class="row justify-center">
+  <!-- <h4 style="margin-top: 0px;">{{store.detail.name}}</h4> -->
 
+</div>
     <div class="row justify-center">
-      <q-card v-for="r of store.detail.reviews" :key="r" class="my-card col-12 col-md-2">
+      <q-card
+        v-for="r of store.detail.reviews"
+
+        :key="r"
+        style="margin-right: 5px"
+        class="my-card col-10 col-md-2 bg-warning text-info"
+      >
         <img :src="`../${r.image}`" />
 
         <q-card-section>
@@ -18,7 +27,7 @@
           <q-rating
             v-model="r.taste"
             size="2em"
-            color="orange"
+            color="info"
             readonly
             icon-selected="star"
             icon-half="star_half"
@@ -30,11 +39,25 @@
           <q-rating
             v-model="r.overall"
             size="2em"
-            color="orange"
+            color="info"
             readonly
             icon-selected="star"
             icon-half="star_half"
           />
+        </q-card-section>
+
+        <q-card-section>
+          <div class="row justify-center">
+            <q-btn
+              v-if="r.userid == store.profile.id"
+              unelevated
+              @click="store.delrev(r.revid, id)"
+              rounded
+              label="Delete your review"
+              style="width: 100%"
+              color="negative"
+            />
+          </div>
         </q-card-section>
       </q-card>
     </div>
@@ -73,26 +96,73 @@
         </div>
       </div>
     </div> -->
-    <q-btn round class="fixed-bottom-right" color="primary" @click="prompt = true">
+    <q-btn round class="fixed-bottom-right" color="warning" @click="prompt = true">
       <i class="fa-solid fa-plus"></i>
     </q-btn>
 
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">
-        <q-card-section>
-          <div class="text-h6">Your address</div>
-        </q-card-section>
+        <q-bar>
+          <q-space />
 
-        <q-card-section class="q-pt-none">
-          <q-input dense v-model="address" autofocus @keyup.enter="prompt = false" />
+          <q-btn dense @click="currimg = null" flat icon="close" v-close-popup>
+            <q-tooltip class="bg-white text-primary">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section>
+          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+            <q-input
+              filled
+              v-model="title"
+              label="Title"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+            />
+
+            <q-input
+              filled
+              v-model="rev"
+              label="Your review"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+            />
+            <div class="row justify-center">Taste</div>
+            <div class="row justify-center">
+              <q-rating
+                v-model="taster"
+                size="2em"
+                color="orange"
+                icon-selected="star"
+                icon-half="star_half"
+              />
+            </div>
+            <div class="row justify-center">Overall</div>
+            <div class="row justify-center">
+              <q-rating
+                v-model="overall"
+                size="2em"
+                color="orange"
+                icon-selected="star"
+                icon-half="star_half"
+              />
+            </div>
+            <div class="row justify-center">
+              <q-btn
+                :disable="currimg != null"
+                label="Take a Photo"
+                color="warning"
+                @click="initializeCamera(), (dialog = true)"
+                style="width: 100%"
+              ></q-btn>
+            </div>
+
+            <div class="row justify-center">
+              <q-btn label="Submit" type="submit" color="warning" />
+              <q-btn label="Reset" type="reset" color="warning" flat class="q-ml-sm" />
+            </div>
+          </q-form>
         </q-card-section>
-        <q-card-section class="q-pt-none">
-          <q-btn label="Make Photo" color="primary" @click="(dialog = true), initializeCamera()" />
-        </q-card-section>
-        <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Add address" v-close-popup />
-        </q-card-actions>
       </q-card>
     </q-dialog>
 
@@ -125,7 +195,7 @@
           >
             <q-tooltip v-if="!maximizedToggle" class="bg-white text-primary">Maximize</q-tooltip>
           </q-btn>
-          <q-btn dense flat icon="close" v-close-popup>
+          <q-btn dense @click="stopCamera()" flat icon="close" v-close-popup>
             <q-tooltip class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
         </q-bar>
@@ -145,11 +215,16 @@
 import router from '@/router';
 import { useCounterStore } from '@/stores/counter.js';
 import { ref } from 'vue';
+import { Notify } from 'quasar';
 import axios from 'axios';
 let dialog = ref(false);
 let prompt = ref(false);
-let address = ref('');
-let slide = ref(1);
+let title = ref('');
+let taster = ref(0);
+let overall = ref(0);
+let rev = ref('');
+
+let currimg = ref(null);
 const store = useCounterStore();
 if (store.profile.username == undefined) {
   router.push('/');
@@ -165,10 +240,12 @@ let maximizedToggle = ref(true);
 // store.getImg(id);
 // console.log(store.imgs);
 async function captureAndUpload() {
+  Notify.create({
+    message: 'Photo taken and ready to post!',
+    position: 'top',
+    color: 'info',
+  });
   await capturePhoto(id);
-  await store.getDetail(id);
-
-  slide.value = 2;
 }
 async function initializeCamera() {
   try {
@@ -179,26 +256,54 @@ async function initializeCamera() {
   }
 }
 
-async function capturePhoto(id) {
+async function capturePhoto() {
   const canvas = document.createElement('canvas');
   const video = videoPlayer.value;
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
   const imageDataURL = canvas.toDataURL('image/png');
-  console.log(imageDataURL);
+
+  currimg.value = imageDataURL;
+
   stopCamera();
-  await uploadImage(imageDataURL, id);
 }
 
-async function uploadImage(imageDataURL, id) {
+async function onSubmit() {
+  let ima = null;
   try {
-    const response = await axios.post(`/img/${id}`, { image: imageDataURL });
+    if (currimg.value == null) {
+      ima = '';
+    } else {
+      ima = currimg.value;
+    }
+    const response = await axios.post(`/img/${id}`, {
+      image: ima,
+      review: rev.value,
+      title: title.value,
+      userid: store.profile.id,
+      trating: taster.value,
+      arating: overall.value,
+    });
     console.log(response.data);
+    prompt.value = false;
+    await store.getDetail(id);
   } catch (error) {
     console.error(error);
   }
 }
+
+function onReset() {
+  title.value = '';
+  rev.value = '';
+  taster.value = 0;
+  overall.value = 0;
+  currimg.value = null;
+}
+
+// async function uploadImage(imageDataURL, id) {
+
+// }
 
 function stopCamera() {
   const stream = videoPlayer.value.srcObject;
@@ -216,8 +321,9 @@ function stopCamera() {
   margin-right: 5px;
 }
 
-h3 {
-  color: white;
+h3,h4 {
+  color: rgb(24, 29, 39);
+  font-family: alynx;
 }
 
 .fixed-bottom-right {

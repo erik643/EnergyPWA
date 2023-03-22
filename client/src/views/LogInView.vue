@@ -1,6 +1,6 @@
 <template>
   <div class="container row justify-center">
-    <q-card v-if="login" class="my-card">
+    <q-card class="my-card text-info bg-warning q-gutter-md col-12 col-md-4" v-if="login">
       <q-card-section class="row justify-center">
         <div class="text-h5 text-weight-bolder">Login</div>
       </q-card-section>
@@ -8,12 +8,13 @@
       <!-- ------------------------------------------------------------------------------------------------
                                 LOG IN -->
 
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md col-12 col-md-6">
+      <q-form @submit="onSubmit" @reset="onReset">
         <q-card-section>
           <q-input
             rounded
             outlined
             v-model="username"
+            bg-color="info"
             label="Username *"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || 'Please type something']"
@@ -23,6 +24,9 @@
           <q-input
             rounded
             outlined
+
+
+            bg-color="info"
             type="password"
             v-model="pwd"
             label="Password *"
@@ -34,11 +38,11 @@
         </q-card-section>
 
         <q-card-actions vertical>
-          <q-btn label="Login" type="submit" color="warning" />
-          <q-btn label="Reset" type="reset" color="warning" flat class="q-ml-sm" />
+          <q-btn label="Login" type="submit" color="info" />
+          <q-btn label="Reset" type="reset" color="info" flat class="q-ml-sm" />
           <q-btn
             label="Don't got an account? Sign in here!"
-            color="warning"
+            color="info"
             flat
             class="q-ml-sm text-caption"
             @click="login = false"
@@ -49,15 +53,16 @@
 
     <!-- ------------------------------------------------------------------------------------------------ -->
     <!-- SIGN IN -->
-    <q-card v-if="!login" class="my-card">
+    <q-card v-if="!login" class="my-card bg-warning text-info q-gutter-md col-12 col-md-4">
       <q-card-section class="row justify-center">
         <div class="text-h5 text-weight-bolder">Sign In</div>
       </q-card-section>
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md col-12 col-md-6">
+      <q-form @submit="onSubmit" @reset="onReset">
         <q-card-section>
           <q-input
             rounded
             outlined
+            bg-color="info"
             v-model="signname"
             label="First Name *"
             lazy-rules
@@ -68,6 +73,7 @@
           <q-input
             rounded
             outlined
+            bg-color="info"
             v-model="username"
             label="Username *"
             lazy-rules
@@ -81,6 +87,7 @@
           <q-input
             rounded
             outlined
+            bg-color="info"
             type="password"
             v-model="pwd"
             label="Password *"
@@ -93,11 +100,11 @@
         </q-card-section>
 
         <q-card-actions vertical>
-          <q-btn label="Sign In" type="submit" color="warning" />
-          <q-btn label="Reset" type="reset" color="warning" flat class="q-ml-sm" />
+          <q-btn label="Sign In" type="submit" color="info" />
+          <q-btn label="Reset" type="reset" color="info" flat class="q-ml-sm" />
           <q-btn
             label="Got an account? Login in here!"
-            color="warning"
+            color="info"
             flat
             class="q-ml-sm text-caption"
             @click="login = true"
@@ -154,6 +161,8 @@ async function onSubmit() {
         position: 'top',
         color: 'info',
       });
+
+      navigator.vibrate(650);
     }
   } else {
     const user = {
@@ -181,6 +190,7 @@ function onReset() {
 <style lang="scss">
 .my-card {
   margin-top: 3%;
-  min-width: 550px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 </style>

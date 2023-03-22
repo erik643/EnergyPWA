@@ -6,17 +6,28 @@ export const dbgetData = async () => {
   );
   return rows;
 };
+
+export const dbgetallRevs = async () => {
+  const { rows } = await query(
+    'select * from images ;',
+  );
+  return rows;
+};
+
 export const dbgetDetail = async (id) => {
   const { rows } = await query(
     `select id,name, (select json_agg(json_build_object('image', image, 'title', title,'review',review,'taste',trating,'overall'
-    ,arating)) AS "reviews" from images where id = e.id)
+    ,arating,'userid',userid,'revid',revid)) AS "reviews" from images where id = e.id)
     from energys e join images i using(id) where id = $1; `,
     [id],
   );
   return rows[0];
 };
-export const dbAddImg = async (id, file) => {
-  await query('INSERT INTO images (id,image) VALUES ($1,$2) returning *', [id, file]);
+export const dbAddImg = async (id, file, body) => {
+  await query(
+    'INSERT INTO images (id,image,userid,review,title,trating,arating) VALUES ($1,$2,$3,$4,$5,$6,$7) returning *',
+    [id, file, body.userid, body.review, body.title, body.trating, body.arating],
+  );
 };
 
 export const dbAddUser = async (obj) => {
@@ -36,6 +47,11 @@ export const dbgetUser = async (obj) => {
 
 export const dbgetAllUsers = async () => {
   const { rows } = await query('select username from accounts;');
+  return rows;
+};
+
+export const delrev = async (id) => {
+  const { rows } = await query('DELETE FROM images WHERE revid=$1 returning *', [id]);
   return rows;
 };
 

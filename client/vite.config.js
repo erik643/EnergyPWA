@@ -36,6 +36,14 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
+      '/review': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/eee': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
     },
   },
   preview: {
@@ -92,6 +100,35 @@ export default defineConfig({
             handler: 'NetworkFirst',
             options: {
               cacheName: 'Eriks-Energys',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: '/eee',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'Eriks-Reviews',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+
+          {
+            urlPattern: /\/review\/\d+$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'Eriks-Detail',
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 * 1, // <== 1 day

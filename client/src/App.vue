@@ -13,18 +13,61 @@
           icon="menu"
         />
 
-        <q-tabs class="mobile-hide absolute" align="left">
+        <q-tabs  class="mobile-hide absolute text-info"  align="left">
           <q-route-tab to="/" label="Home" />
-          <q-route-tab to="/comp" label="Companys" />
+
 
           <q-route-tab to="/about" label="Impressum" />
         </q-tabs>
         <q-toolbar-title class="text-center header text-info text-h4">Energy</q-toolbar-title>
-        <q-avatar class="mobile-hide" size="42px">
-          <img :src="'/images/pfp.jpg'" />
-        </q-avatar>
+
+        <q-btn class="mobile-hide" @click="drawer2=!drawer2" round>
+          <q-avatar class="mobile-hide" size="42px">
+            <img :src="'/images/pfp.jpg'" />
+          </q-avatar>
+        </q-btn>
       </q-toolbar>
     </q-header>
+
+    <q-drawer
+      v-model="drawer2"
+      :width="300"
+
+      :breakpoint="500"
+      overlay
+
+      bordered
+      class="bg-info mobile-hide"
+    >
+      <div>
+        <q-img :src="'/images/bg2.jpg'" style="height: 150px">
+          <div class="absolute-bottom bg-transparent">
+            <!-- ------------------------------------------------------------------- -->
+
+            <!-- <q-avatar size="56px" class="q-mb-sm">
+              <img :src="'/images/pfp.jpg'" />
+            </q-avatar> -->
+
+            <q-btn @click="changePfp()" round>
+              <q-avatar size="56px">
+                <img :src="'/images/pfp.jpg'" />
+              </q-avatar>
+            </q-btn>
+
+            <!-- -------------------------------------------- -->
+            <div class="text-weight-bold">{{ store.profile.firstname }}</div>
+            <div>@{{ store.profile.username }}</div>
+          </div>
+        </q-img>
+        <q-btn
+          color="warning"
+          @click="logOut()"
+          class="full-width absolute-bottom"
+          text-color="white"
+          label="Log out"
+        />
+      </div>
+    </q-drawer>
 
     <q-drawer
       v-model="drawer"
@@ -33,7 +76,7 @@
       behavior="mobile"
       overlay
       bordered
-      class="bg-grey-3"
+      class="bg-info desktop-hide"
     >
       <!-- <q-scroll-area class="fit">
         <q-list>
@@ -73,7 +116,7 @@
 
         <q-tabs vertical>
           <q-route-tab to="/home" label="Home" />
-          <q-route-tab to="/comp" label="Companys" />
+
           <q-route-tab to="/about" label="Impressum" />
         </q-tabs>
         <q-btn
@@ -131,7 +174,7 @@ const store = useCounterStore();
 // };
 
 const drawer = ref(false);
-
+const drawer2 = ref(false);
 function changePfp() {
   console.log('changed');
 }
@@ -152,7 +195,7 @@ if (JSON.parse(localStorage.getItem('user')) != null) {
   background-color: white;
 }
 body {
-  background-color: rgb(24, 21, 21);
+  background-color: rgb(89, 131, 146);
 }
 .tablescroll {
   overflow-y: scroll;
@@ -163,7 +206,7 @@ body {
 
 @font-face {
   font-family: 'alynx';
-  src: local('alynx'), url(/webfonts/ARVAQ.ttf) format('truetype');
+  src: local('alynx'), url(/images/thumbnail/Infinite_Energy_Italic.ttf) format('truetype');
 }
 div {
   font-family: Arial, Helvetica, sans-serif;
@@ -179,6 +222,11 @@ div {
 }
 .sidebar {
   width: 25%;
+}
+
+.q-tab__label {
+  font-family: alynx;
+
 }
 img {
   width: 100%;

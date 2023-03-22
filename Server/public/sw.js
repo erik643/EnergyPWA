@@ -78,17 +78,17 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "assets/index.3e01d47a.js",
+    "url": "assets/index.2d4b920d.js",
     "revision": null
   }, {
-    "url": "assets/index.6d04070f.css",
+    "url": "assets/index.ee439e6e.css",
     "revision": null
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
   }, {
     "url": "index.html",
-    "revision": "d4e8c73b920d5ca9c3c0c94d3d5da4b7"
+    "revision": "5d6e72862ecf06ac3cbfc47b00d6bc46"
   }, {
     "url": "registerSW.js",
     "revision": "1872c500de691dce40960bb85481de07"
@@ -103,7 +103,7 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "revision": "1ba2ae710d927f13d483fd5d1e548c9b"
   }, {
     "url": "css/all.min.css",
-    "revision": "3d5ef2bf867c4054a2f336cdbad9e1dc"
+    "revision": "78ad7c6f7e735a43f59d2e176fef21f5"
   }, {
     "url": "images/energy.png",
     "revision": "35d96dd3e11ea0e946fab4107393a77c"
@@ -153,8 +153,11 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
     "url": "images/icons/mstile-150x150.png",
     "revision": "91bf21147cecff112dfc4ca687c96801"
   }, {
+    "url": "images/icons/placeholder.png",
+    "revision": "0b83dcbd8bd3fa8ec29dd276ce699a03"
+  }, {
     "url": "manifest.webmanifest",
-    "revision": "006b057c03997606c9c74e27d12d4dc6"
+    "revision": "f50a76e6426889594e4db1857fff5334"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
@@ -169,6 +172,24 @@ define(['./workbox-a4536b13'], (function (workbox) { 'use strict';
   }), 'GET');
   workbox.registerRoute("/energy", new workbox.NetworkFirst({
     "cacheName": "Eriks-Energys",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 50,
+      maxAgeSeconds: 86400
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
+  workbox.registerRoute("/eee", new workbox.NetworkFirst({
+    "cacheName": "Eriks-Reviews",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 50,
+      maxAgeSeconds: 86400
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
+  workbox.registerRoute(/\/review\/\d+$/, new workbox.NetworkFirst({
+    "cacheName": "Eriks-Detail",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 50,
       maxAgeSeconds: 86400
