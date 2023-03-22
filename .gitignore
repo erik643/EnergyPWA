@@ -69,7 +69,7 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 #made by me
-
+*.png
 # Yarn Integrity file
 .yarn-integrity
 
