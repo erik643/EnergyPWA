@@ -4,9 +4,9 @@
       <h3>Reviews</h3>
     </div>
     <div class="row justify-center">
-      <!-- <h4 style="margin-top: 0px;">{{store.detail.name}}</h4> -->
+      <h4 style="margin-top: 0px;">{{store.detail.name}}</h4>
     </div>
-    <div class="row justify-center">
+    <div class="row  items-start flex-break justify-center">
       <q-card
         v-for="r of store.detail.reviews"
         :key="r"

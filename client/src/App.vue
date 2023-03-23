@@ -10,7 +10,7 @@
           @click="drawer = !drawer"
           round
           dense
-          icon="menu"
+          icon="img:/images/thumbnail/bars-solid.svg"
         />
 
         <q-tabs  class="mobile-hide absolute text-info"  align="left">

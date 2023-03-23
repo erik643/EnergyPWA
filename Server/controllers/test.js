@@ -19,7 +19,7 @@ const path = require('path');
 
 export async function saveImg(req, res) {
   if (req.body.image === '') {
-    dbAddImg(req.params.id, 'images/icons/placeholder.png', req.body);
+    dbAddImg(req.params.id, 'images/icons/placeholder.jpg', req.body);
     res.status(200).send('ok');
     return;
   }
