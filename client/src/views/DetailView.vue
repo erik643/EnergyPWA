@@ -273,6 +273,7 @@ async function onSubmit() {
     } else {
       ima = currimg.value;
     }
+    prompt.value = false;
     const response = await axios.post(`/img/${id}`, {
       image: ima,
       review: rev.value,
@@ -282,7 +283,7 @@ async function onSubmit() {
       arating: overall.value,
     });
     console.log(response.data);
-    prompt.value = false;
+
     await store.getDetail(id);
   } catch (error) {
     console.error(error);
